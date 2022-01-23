@@ -417,9 +417,5 @@ class Map{
             }
         }
     }
-    void enableExit(){
-        delete map[exitC.getX()][exitC.getY()];
-        map[exitC.getX()][exitC.getY()] = new Object(door);
-    }
-    
+
 };
