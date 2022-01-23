@@ -364,9 +364,9 @@ class Map{
                 for(int j = playerC.getY() - 1; j <= playerC.getY() + 1; j++){
                     delete map[i][j];
                     map[i][j] = new Object(air);
-                    return true;
                 }
             }
+            return true;
         }
         return false;
     }
