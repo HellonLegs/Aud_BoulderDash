@@ -14,6 +14,7 @@ class Map{
         int currentFrameY;
         int playerCircle;
         int diamantCircle;
+        int enemyCircle;
     
     public:
     Map(int lvl, SVG *view){
@@ -22,6 +23,7 @@ class Map{
         currentFrameY = 0;
         playerCircle = 0;
         diamantCircle = 0;
+        enemyCircle = 0;
         
         buffer[0] = Image("img/titan.png", -16, -16, 16, 16, view);
         buffer[1] = Image("img/wall.png", -16, -16, 16, 16, view);
@@ -302,6 +304,7 @@ class Map{
             }
         }
         diamantCircle = (diamantCircle + 1) % 8;
+        
         AlgoViz::flushMessages();
     }
     
@@ -383,6 +386,16 @@ class Map{
             }
         }
         return p;
+    }
+    
+    void moveEnemys(){
+        for(int i = 0; i < 40; i++){
+            for(int j = 0; j < 22; j++){
+                if(map[i][j]->getType() == enemy){
+                    
+                }
+            }
+        }
     }
     
     bool checkFalling(){

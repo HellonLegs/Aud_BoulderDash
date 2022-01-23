@@ -3,10 +3,14 @@ class Object{
     private:
     Blocks type;
     bool hasVelocity;
+    int dx;
+    int dy;
     public:
     Object(Blocks type){
         this->type = type;
         hasVelocity = false;
+        dx = 0;
+        dy = 0;
     }
     Blocks getType(){
         return type;
@@ -17,6 +21,6 @@ class Object{
     bool getVelocity(){
         return hasVelocity;
     }
-
+    
 
 };
