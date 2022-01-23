@@ -9,8 +9,13 @@ class Object{
     Object(Blocks type){
         this->type = type;
         hasVelocity = false;
-        dx = 0;
-        dy = 0;
+        if(type == enemy){
+            dx = 1;
+            dy = 0;
+        }else{
+            dx = 0;
+            dy = 0;
+        }
     }
     Blocks getType(){
         return type;

@@ -1,3 +1,4 @@
+#pragma once
 class Adress{
     private:
         int x;

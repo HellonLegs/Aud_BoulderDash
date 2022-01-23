@@ -9,7 +9,7 @@ class Map{
         Adress exitC;
         SVG *view;
         Image bilder[30][16];
-        Image buffer[20];
+        Image buffer[23];
         int currentFrameX;
         int currentFrameY;
         int playerCircle;
@@ -43,9 +43,17 @@ class Map{
         buffer[15] = Image("img/rockford_standing0.png", -16, -16, 16, 16, view);
         buffer[16] = Image("img/rockford_standing1.png", -16, -16, 16, 16, view);
         buffer[17] = Image("img/rockford_standing2.png", -16, -16, 16, 16, view);
-        buffer[18] = Image("img/enemy.png", -16, -16, 16, 16, view);
-        buffer[19] = Image("img/door.png", -16, -16, 16, 16, view);
-
+        buffer[18] = Image("img/enemy0.png", -16, -16, 16, 16, view);
+        buffer[19] = Image("img/enemy1.png", -16, -16, 16, 16, view);
+        buffer[20] = Image("img/enemy2.png", -16, -16, 16, 16, view);
+        buffer[21] = Image("img/enemy3.png", -16, -16, 16, 16, view);
+        buffer[22] = Image("img/door.png", -16, -16, 16, 16, view);
+        
+        for(int i = 0; i < 40; i++){
+                    for(int j = 0; j < 22; j++){
+                        map[i][j] = new Object(dirt);
+                    }
+                }
         for(int j = 0; j < 22; j++){
             map[0][j] = new Object(titan);
             map[39][j] = new Object(titan);
@@ -223,13 +231,6 @@ class Map{
                 map[7][20] = new Object(air);
                 map[13][20] = new Object(air);
                 map[23][20] = new Object(air);
-                for(int i = 0; i < 40; i++){
-                    for(int j = 0; j < 22; j++){
-                        if(map[i][j] == 0){
-                            map[i][j] = new Object(dirt);
-                        }
-                    }
-                }
         drawAll();
     }
     
@@ -239,72 +240,116 @@ class Map{
         int y = currentFrameY * 6;
         for(int i = 0; i < 30; i++){
             for(int j = 0; j < 16; j++){
-                if(map[i + x][j + y]->getType() == titan){
-                    bilder[i][j] = Image("img/titan.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == wall){
-                    bilder[i][j] = Image("img/wall.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == rock){
-                    bilder[i][j] = Image("img/rock.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == dirt){
-                    bilder[i][j] = Image("img/dirt.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == diamant){
-                    switch (diamantCircle){
-                        case 0 :
-                            bilder[i][j] = Image("img/diamant0.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 1 :
-                            bilder[i][j] = Image("img/diamant1.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 2 :
-                            bilder[i][j] = Image("img/diamant2.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 3 :
-                            bilder[i][j] = Image("img/diamant3.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 4 :
-                            bilder[i][j] = Image("img/diamant4.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 5 :
-                            bilder[i][j] = Image("img/diamant5.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 6 :
-                            bilder[i][j] = Image("img/diamant6.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 7 :
-                            bilder[i][j] = Image("img/diamant7.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                    }
-                    
-                }else if(map[i + x][j + y]->getType() == air){
-                    bilder[i][j] = Image("img/air.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == player){
-                    switch (playerCircle){
-                        case -2 :
-                            bilder[i][j] = Image("img/rockford_left.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case -1 :
-                            bilder[i][j] = Image("img/rockford_right.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 0 :
-                            bilder[i][j] = Image("img/rockford_standing0.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 1 :
-                            bilder[i][j] = Image("img/rockford_standing1.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                        case 2 :
-                            bilder[i][j] = Image("img/rockford_standing2.png", i * 16, j * 16, 16, 16, view);
-                            break;
-                    }
-                    
-                }else if(map[i + x][j + y]->getType() == enemy){
-                    bilder[i][j] = Image("img/enemy.png", i * 16, j * 16, 16, 16, view);
-                }else if(map[i + x][j + y]->getType() == door){
-                    bilder[i][j] = Image("img/door.png", i * 16, j * 16, 16, 16, view);
+                switch (map[i + x][j + y]->getType()){
+                    case titan :
+                        bilder[i][j] = buffer[0];
+                        bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
+                    case wall :
+                        bilder[i][j] = buffer[1];
+                        bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
+                    case rock :
+                        bilder[i][j] = buffer[2];
+                        bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
+                    case dirt :
+                        bilder[i][j] = buffer[3];
+                        bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
+                    case diamant :
+                        switch (diamantCircle){
+                            case 0 :
+                                bilder[i][j] = buffer[4];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 1 :
+                                bilder[i][j] = buffer[5];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 2 :
+                                bilder[i][j] = buffer[6];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 3 :
+                                bilder[i][j] = buffer[7];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 4 :
+                                bilder[i][j] = buffer[8];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 5 :
+                                bilder[i][j] = buffer[9];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 6 :
+                                bilder[i][j] = buffer[10];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 7 :
+                                bilder[i][j] = buffer[11];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                        }
+                        break;
+                    case air :
+                        bilder[i][j] = buffer[12];
+                        bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
+                    case player :
+                        switch (playerCircle){
+                            case -2 :
+                                bilder[i][j] = buffer[13];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case -1 :
+                                bilder[i][j] = buffer[14];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 0 :
+                                bilder[i][j] = buffer[15];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 1 :
+                                bilder[i][j] = buffer[16];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 2 :
+                                bilder[i][j] = buffer[17];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                        }
+                        break;
+                    case enemy :
+                        switch (playerCircle){
+                            case 0 :
+                                bilder[i][j] = buffer[18];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 1 :
+                                bilder[i][j] = buffer[19];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 2 :
+                                bilder[i][j] = buffer[20];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                            case 3 :
+                                bilder[i][j] = buffer[21];
+                                bilder[i][j].moveTo(i * 16, j * 16);
+                                break;
+                        }
+                        break;
+                    case door :
+                    bilder[i][j] = buffer[22];
+                    bilder[i][j].moveTo(i * 16, j * 16);
+                        break;
                 }
             }
         }
         diamantCircle = (diamantCircle + 1) % 8;
-        
+        enemyCircle = (diamantCircle + 1) % 4;
         AlgoViz::flushMessages();
     }
     
@@ -327,10 +372,10 @@ class Map{
                 break;
         }
         
-        object* player = map[playerC.getX()][playerC.getY()];
-        object* target = map[playerC.getX() + dx][playerC.getY() + dy];
-        object* targetx = map[playerC.getX() + dx][playerC.getY()];
-        object* target2x = map[playerC.getX() + (2 * dx)][playerC.getY()];
+        Object* player = map[playerC.getX()][playerC.getY()];
+        Object* target = map[playerC.getX() + dx][playerC.getY() + dy];
+        Object* targetx = map[playerC.getX() + dx][playerC.getY()];
+        Object* target2x = map[playerC.getX() + (2 * dx)][playerC.getY()];
 
         if(target->getType() != titan && target->getType() != wall && !(targetx->getType() == rock && target2x->getType() == rock))
         {
@@ -339,10 +384,9 @@ class Map{
                 AlgoViz::sleep(200);
                 if(view->lastKey() == last)
                 {
-                    Object *swap = player;
                     map[playerC.getX()][playerC.getY()] = target2x;
                     map[playerC.getX() + (2 * dx)][playerC.getY()] = targetx;
-                    map[playerC.getX() + dx][playerC.getY()] = swap;
+                    map[playerC.getX() + dx][playerC.getY()] = player;
                     playerC.setX(playerC.getX() + dx);
                     playerC.setY(playerC.getY());
                 }
@@ -366,9 +410,8 @@ class Map{
             }
             else if(target->getType() == air)
             {
-                Object *swap = player;
                 map[playerC.getX()][playerC.getY()] = target;
-                map[playerC.getX() + dx][playerC.getY() + dy] = swap;
+                map[playerC.getX() + dx][playerC.getY() + dy] = player;
                 playerC.setX(playerC.getX() + dx);
                 playerC.setY(playerC.getY() + dy);
             }else if(target->getType() == door){
@@ -396,27 +439,129 @@ class Map{
     void moveEnemys(){
         for(int i = 0; i < 40; i++){
             for(int j = 0; j < 22; j++){
-                if(map[i][j]->getType() == enemy){
-                    
+                Object *enemyToMove = map[i][j];
+                if(enemyToMove->getType() == enemy){
+                    if(enemyToMove->getDx() == 1){
+                        if(map[i][j + 1]->getType() == air){
+                            map[i][j]->setDx(0);
+                            map[i][j]->setDy(1);
+                            map[i][j] = map[i][j + 1];
+                            map[i][j + 1] = enemyToMove;
+                        }else if(map[i + 1][j]->getType() == air){
+                            map[i][j] = map[i + 1][j];
+                            map[i + 1][j] = enemyToMove;
+                        }else if(map[i][j - 1]->getType() == air){
+                            map[i][j]->setDx(0);
+                            map[i][j]->setDy(-1);
+                            map[i][j] = map[i][j - 1];
+                            map[i][j - 1] = enemyToMove;
+                        }else if(map[i - 1][j]->getType() == air){
+                            map[i][j]->setDx(-1);
+                            map[i][j] = map[i - 1][j];
+                            map[i - 1][j] = enemyToMove;
+                        }
+                    }else if(enemyToMove->getDy() == 1){
+                        if(map[i - 1][j]->getType() == air){
+                            map[i][j]->setDx(-1);
+                            map[i][j]->setDy(0);
+                            map[i][j] = map[i - 1][j];
+                            map[i - 1][j] = enemyToMove;
+                        }else if(map[i][j + 1]->getType() == air){
+                            map[i][j] = map[i][j + 1];
+                            map[i][j + 1] = enemyToMove;
+                        }else if(map[i + 1][j]->getType() == air){
+                            map[i][j]->setDx(1);
+                            map[i][j]->setDy(0);
+                            map[i][j] = map[i + 1][j];
+                            map[i + 1][j] = enemyToMove;
+                        }else if(map[i][j - 1]->getType() == air){
+                            map[i][j]->setDy(-1);
+                            map[i][j] = map[i][j - 1];
+                            map[i][j - 1] = enemyToMove;
+                        }
+                    }else if(enemyToMove->getDx() == -1){
+                        if(map[i][j - 1]->getType() == air){
+                            map[i][j]->setDx(0);
+                            map[i][j]->setDy(-1);
+                            map[i][j] = map[i][j - 1];
+                            map[i][j - 1] = enemyToMove;
+                        }else if(map[i - 1][j]->getType() == air){
+                            map[i][j] = map[i - 1][j];
+                            map[i - 1][j] = enemyToMove;
+                        }else if(map[i][j + 1]->getType() == air){
+                            map[i][j]->setDx(0);
+                            map[i][j]->setDy(1);
+                            map[i][j] = map[i][j + 1];
+                            map[i][j + 1] = enemyToMove;
+                        }else if(map[i + 1][j]->getType() == air){
+                            map[i][j]->setDx(1);
+                            map[i][j] = map[i + 1][j];
+                            map[i + 1][j] = enemyToMove;
+                        }
+                    }else if(enemyToMove->getDy() == -1){
+                        if(map[i + 1][j]->getType() == air){
+                            map[i][j]->setDx(1);
+                            map[i][j]->setDy(0);
+                            map[i][j] = map[i + 1][j];
+                            map[i + 1][j] = enemyToMove;
+                        }else if(map[i][j - 1]->getType() == air){
+                            map[i][j] = map[i][j - 1];
+                            map[i][j - 1] = enemyToMove;
+                        }else if(map[i - 1][j]->getType() == air){
+                            map[i][j]->setDx(-1);
+                            map[i][j]->setDy(0);
+                            map[i][j] = map[i - 1][j];
+                            map[i - 1][j] = enemyToMove;
+                        }else if(map[i][j + 1]->getType() == air){
+                            map[i][j]->setDy(1);
+                            map[i][j] = map[i][j + 1];
+                            map[i][j + 1] = enemyToMove;
+                        }
+                    }
                 }
             }
         }
     }
     
-    bool checkFalling(){
+    bool checkDeath(){
+        Object *oben = map[playerC.getX()][playerC.getY() - 1];
+        Object *unten = map[playerC.getX()][playerC.getY() + 1];
+        Object *rechts = map[playerC.getX() + 1][playerC.getY()];
+        Object *links = map[playerC.getX() - 1][playerC.getY()];
+        if(oben->getType() == rock || oben->getType() == diamant){
+            if(oben->getVelocity()){
+                for(int i = playerC.getX() - 1; i <= playerC.getX() + 1; i++){
+                    for(int j = playerC.getY() - 1; j <= playerC.getY() + 1; j++){
+                        delete map[i][j];
+                        map[i][j] = new Object(air);
+                        return true;
+                    }
+                }
+            }
+        }
+        if(oben->getType() == enemy || unten->getType() == enemy || rechts->getType() == enemy || links->getType() == enemy){
+            for(int i = playerC.getX() - 1; i <= playerC.getX() + 1; i++){
+                for(int j = playerC.getY() - 1; j <= playerC.getY() + 1; j++){
+                    delete map[i][j];
+                    map[i][j] = new Object(air);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    void checkFalling(){
         for(int x = 1; x < 39; x++){
             for(int y = 1; y < 21; y++){
                 if(map[x][y]->getType() == rock || map[x][y]->getType() == diamant)
                 {
-                    if(map[x][y]->getVelocity() && (map[x][y + 1]->getType() == player || map[x][y + 1]->getType() == enemy)){
+                    if(map[x][y]->getVelocity() && map[x][y + 1]->getType() == enemy){
                         for(int i = x - 1; i <= x + 1; i++){
                             for(int j = y - 1; j <= y + 1; j++){
                                 delete map[i][j];
-                                map[i][j] = new Object(diamant);
+                                map[i][j] = new Object(air);
                             }
-                        }
-                        if(x == playerC.getX() && (y + 1) == playerC.getY()){
-                            return true;
                         }
                     }
                     else if(map[x][y + 1]->getType() == air)
@@ -442,6 +587,8 @@ class Map{
                             map[x + 1][y + 1] = swap;
                             map[x + 1][y + 1]->setVelocity(true);
                         }
+                    }else if(map[x][y + 1]->getType() == player){
+                        
                     }else
                     {
                         map[x][y]->setVelocity(false);
@@ -449,7 +596,6 @@ class Map{
                 }
             }
         }
-        return false;
     }
     void enableExit(){
         delete map[exitC.getX()][exitC.getY()];
