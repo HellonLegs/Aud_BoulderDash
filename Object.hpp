@@ -21,6 +21,16 @@ class Object{
     bool getVelocity(){
         return hasVelocity;
     }
-    
-
+    void setDx(int dx){
+        this->dx = dx;
+    }
+    void setDy(int dy){
+        this->dy = dy;
+    }
+    int getDx(){
+        return dx;
+    }
+    int getDy(){
+        return dy;
+    }
 };
