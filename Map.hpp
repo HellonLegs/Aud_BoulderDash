@@ -327,49 +327,54 @@ class Map{
                 break;
         }
         
-        if(map[playerC.getX() + dx][playerC.getY() + dy]->getType() != titan && map[playerC.getX() + dx][playerC.getY() + dy]->getType() != wall && !(map[playerC.getX() + dx][playerC.getY()]->getType() == rock && map[playerC.getX() + (2 * dx)][playerC.getY()]->getType() == rock))
+        object* player = map[playerC.getX()][playerC.getY()];
+        object* target = map[playerC.getX() + dx][playerC.getY() + dy];
+        object* targetx = map[playerC.getX() + dx][playerC.getY()];
+        object* target2x = map[playerC.getX() + (2 * dx)][playerC.getY()];
+
+        if(target->getType() != titan && target->getType() != wall && !(targetx->getType() == rock && target2x->getType() == rock))
         {
-            if(map[playerC.getX() + dx][playerC.getY()]->getType() == rock && map[playerC.getX() + (2 * dx)][playerC.getY()]->getType() == air)
+            if(targetx->getType() == rock && target2x->getType() == air)
             {
                 AlgoViz::sleep(200);
                 if(view->lastKey() == last)
                 {
-                    Object *swap = map[playerC.getX()][playerC.getY()];
-                    map[playerC.getX()][playerC.getY()] = map[playerC.getX() + (2 * dx)][playerC.getY()];
-                    map[playerC.getX() + (2 * dx)][playerC.getY()] = map[playerC.getX() + dx][playerC.getY()];
+                    Object *swap = player;
+                    map[playerC.getX()][playerC.getY()] = target2x;
+                    map[playerC.getX() + (2 * dx)][playerC.getY()] = targetx;
                     map[playerC.getX() + dx][playerC.getY()] = swap;
                     playerC.setX(playerC.getX() + dx);
                     playerC.setY(playerC.getY());
                 }
             }
-            else if(map[playerC.getX() + dx][playerC.getY() + dy]->getType() == diamant)
+            else if(target->getType() == diamant)
             {
                 p = 1;
                 delete map[playerC.getX() + dx][playerC.getY() + dy];
-                map[playerC.getX() + dx][playerC.getY() + dy] = map[playerC.getX()][playerC.getY()];
+                map[playerC.getX() + dx][playerC.getY() + dy] = player;
                 map[playerC.getX()][playerC.getY()] = new Object(air);
                 playerC.setX(playerC.getX() + dx);
                 playerC.setY(playerC.getY() + dy);
             }
-            else if(map[playerC.getX() + dx][playerC.getY() + dy]->getType() == dirt)
+            else if(target->getType() == dirt)
             {
                 delete map[playerC.getX() + dx][playerC.getY() + dy];
-                map[playerC.getX() + dx][playerC.getY() + dy] = map[playerC.getX()][playerC.getY()];
+                map[playerC.getX() + dx][playerC.getY() + dy] = player;
                 map[playerC.getX()][playerC.getY()] = new Object(air);
                 playerC.setX(playerC.getX() + dx);
                 playerC.setY(playerC.getY() + dy);
             }
-            else if(map[playerC.getX() + dx][playerC.getY() + dy]->getType() == air)
+            else if(target->getType() == air)
             {
-                Object *swap = map[playerC.getX()][playerC.getY()];
-                map[playerC.getX()][playerC.getY()] = map[playerC.getX() + dx][playerC.getY() + dy];
+                Object *swap = player;
+                map[playerC.getX()][playerC.getY()] = target;
                 map[playerC.getX() + dx][playerC.getY() + dy] = swap;
                 playerC.setX(playerC.getX() + dx);
                 playerC.setY(playerC.getY() + dy);
-            }else if(map[playerC.getX() + dx][playerC.getY() + dy]->getType() == door){
+            }else if(target->getType() == door){
                 p = -1;
                 delete map[playerC.getX() + dx][playerC.getY() + dy];
-                map[playerC.getX() + dx][playerC.getY() + dy] = map[playerC.getX()][playerC.getY()];
+                map[playerC.getX() + dx][playerC.getY() + dy] = player;
                 map[playerC.getX()][playerC.getY()] = new Object(air);
                 playerC.setX(playerC.getX() + dx);
                 playerC.setY(playerC.getY() + dy);
