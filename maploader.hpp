@@ -32,7 +32,6 @@ void loadMap(int level, Adress *playerAdress, Adress *exitAdress, Object* map[40
 	}
 
 
-	level -= 1;
 	file.open(fileName[level]);
 
 	while (!file.eof()) {

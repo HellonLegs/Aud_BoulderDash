@@ -50,7 +50,7 @@ class Map{
         buffer[21] = Image("img/enemy3.png", -16, -16, 16, 16, view);
         buffer[22] = Image("img/door.png", -16, -16, 16, 16, view);
         
-        loadMap(1, &playerC, &exitC, map);
+        loadMap(lvl, &playerC, &exitC, map);
         drawAll();
     }
     
