@@ -1,3 +1,4 @@
+#pragma once
 enum Blocks {titan, wall, rock, dirt, diamant, air, player, enemy, door};
 class Object{
     private:
