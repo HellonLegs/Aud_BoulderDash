@@ -1,10 +1,11 @@
 #include <algoviz/SVG.hpp>
 #include "Object.hpp"
 #include "Adress.hpp"
+#include "maploader.hpp"
 
 class Map{
     private:
-        Object *map[40][22];
+        Object* map[40][22];
         Adress playerC;
         Adress exitC;
         SVG *view;
@@ -49,6 +50,8 @@ class Map{
         buffer[21] = Image("img/enemy3.png", -16, -16, 16, 16, view);
         buffer[22] = Image("img/door.png", -16, -16, 16, 16, view);
         
+        loadMap(1, &playerC, &exitC, map)
+
         for(int i = 0; i < 40; i++){
                     for(int j = 0; j < 22; j++){
                         map[i][j] = new Object(dirt);
@@ -231,6 +234,14 @@ class Map{
                 map[7][20] = new Object(air);
                 map[13][20] = new Object(air);
                 map[23][20] = new Object(air);
+        buffer[18] = Image("img/enemy.png", -16, -16, 16, 16, view);
+        buffer[19] = Image("img/door.png", -16, -16, 16, 16, view);
+
+
+        loadMap(1, &playerC, &exitC, map);
+
+        
+>>>>>>> Stashed changes
         drawAll();
     }
     
